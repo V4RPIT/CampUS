@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CampUS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- LOGIN / SIGNUP / RECOVER (one form, app.js switches the mode) -->
+  <section id="auth" class="glass">
+    <h1>Campus Chat</h1>
+    <div class="tabs">
+      <button data-m="login" class="on">Log in</button><button data-m="signup">Sign up</button><button data-m="recover">Recover</button>
+    </div>
+    <form id="authForm">
+      <input id="u" placeholder="Username" autocomplete="username" required>
+      <input id="p" type="password" placeholder="Password (8+ characters)" autocomplete="current-password" required>
+      <input id="x" placeholder="Recovery code (XXXX-XXXX-XXXX)" hidden>
+      <input id="inv" placeholder="Invite code (if your admin set one)" hidden>
+      <input id="hp" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true"> <!-- honeypot: bots fill it -->
+      <button class="primary">Continue</button>
+      <p id="err"></p>
+    </form>
+  </section>
+
+  <!-- MAIN APP: rail (communities) | sidebar (channels) | chat | members -->
+  <div id="app" hidden>
+    <nav id="rail"></nav>
+    <div id="mobileNavBackdrop" hidden></div>
+    <aside id="side" class="glass">
+      <div id="sideTop"></div><div id="sideList"></div>
+      <div id="me"><span id="meAv"></span><b id="meName"></b>
+        <button id="setBtn" title="Profile & settings">⚙️</button></div>
+    </aside>
+    <input id="communityAvatarFile" type="file" accept="image/*" hidden>
+    <main class="glass">
+      <header id="title">
+        <button id="mobileMenuBtn" type="button" aria-label="Open server and channel list" title="Servers and channels">☰</button>
+        <span id="titleText">Pick a community or open a DM</span>
+        <button id="notificationBtn" type="button" title="Notifications" aria-label="Notifications">🔔<span id="notificationBadge" hidden></span></button>
+        <section id="notificationsPanel" hidden>
+          <div class="notifications-heading"><b>Notifications</b><button id="markAllRead" type="button">Mark all read</button></div>
+          <div id="notificationList"></div>
+        </section>
+      </header>
+      <div id="typingStatus" aria-live="polite" hidden></div>
+      <div id="msgs"></div>
+      <form id="composer">
+        <div id="replyPreview" hidden></div>
+        <input id="fileInput" type="file" hidden>
+        <button id="attachBtn" type="button" title="Attach a file" aria-label="Attach a file">＋</button>
+        <input id="text" placeholder="Write a message…" maxlength="2000" autocomplete="off">
+        <span id="filePreview" hidden></span>
+        <button class="primary" type="submit">Send</button>
+      </form>
+    </main>
+    <aside id="members" class="glass"></aside>
+  </div>
+
+  <!-- PROFILE & SETTINGS -->
+  <dialog id="dlg" class="glass">
+    <form id="setForm">
+      <h2>Profile settings</h2>
+      <label>Avatar <input type="file" id="avFile" accept="image/*"></label>
+      <label>Flair <input id="flair" maxlength="20" placeholder="e.g. 🎓 TYBSc CS"></label>
+      <label>Bio <textarea id="bio" maxlength="190" rows="3" placeholder="Tell people about you"></textarea></label>
+      <div class="row"><button type="button" id="logout">Log out</button><span></span>
+        <button type="button" id="closeDlg">Cancel</button><button class="primary">Save</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="actionDialog" class="app-dialog">
+    <form id="actionDialogForm" method="dialog">
+      <div class="dialog-mark" aria-hidden="true">✦</div>
+      <h2 id="actionDialogTitle"></h2>
+      <p id="actionDialogMessage"></p>
+      <input id="actionDialogInput" autocomplete="off" hidden>
+      <div class="dialog-actions">
+        <button type="button" id="actionDialogCancel">Cancel</button>
+        <button type="submit" class="primary" id="actionDialogConfirm">Continue</button>
+      </div>
+    </form>
+  </dialog>
+  <div id="toastRegion" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

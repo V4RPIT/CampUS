@@ -1,0 +1,307 @@
+:root {
+  color-scheme: dark;
+  --page: #111318;
+  --panel: #1b1b20;
+  --panel-raised: #25262c;
+  --line: #393a42;
+  --tx: #e5e1e9;
+  --mut: #c4c6d0;
+  --acc: #c3c0ff;
+  --acc-hover: #d8d5ff;
+  --in: #25262c;
+  --wall: #111318;
+  --shadow: 0 12px 36px rgba(0, 0, 0, .32);
+  --shape-sm: 12px;
+  --shape-md: 16px;
+  --shape-lg: 24px;
+  --shape-xl: 28px;
+}
+body.mobile-nav-open #rail { animation: drawer-in .22s cubic-bezier(.2,.8,.2,1) both }
+* { box-sizing: border-box }
+body {
+  margin: 0;
+  min-height: 100vh;
+  height: 100dvh;
+  color: var(--tx);
+  background: var(--wall) center/cover fixed;
+  font: 15px system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+body.mobile-nav-open #side { animation: drawer-in .24s cubic-bezier(.2,.8,.2,1) both }
+[hidden] { display: none !important }
+.glass {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--shape-lg);
+  box-shadow: var(--shadow);
+}
+@keyframes drawer-in {
+  from { opacity: .65; transform: translateX(-12px) }
+  to { opacity: 1; transform: translateX(0) }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important }
+}
+input, textarea, select, button { font: inherit; color: inherit }
+input, textarea, select {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--in);
+  border: 1px solid var(--line);
+  border-radius: var(--shape-md);
+  outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--acc) }
+button {
+  padding: 9px 14px;
+  background: var(--panel-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--shape-md);
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease;
+}
+button:hover { border-color: var(--acc); background-color: var(--panel-raised); transform: translateY(-1px) scale(1.025) }
+button:active { transform: scale(.96) }
+.primary { color: #292547; background: var(--acc); border-color: var(--acc); font-weight: 650 }
+.primary:hover { color: #292547; background: var(--acc-hover); border-color: var(--acc-hover) }
+.hp { position: absolute; left: -9999px }
+
+/* Authentication */
+#auth { max-width: 380px; margin: 12vh auto; padding: 28px }
+#auth h1 { margin: 0 0 18px; text-align: center }
+#auth form { display: grid; gap: 10px }
+.tabs { display: flex; gap: 6px; margin-bottom: 14px }
+.tabs button { flex: 1 }
+.tabs .on { color: #292547; background: var(--acc); border-color: var(--acc) }
+#err { min-height: 1em; margin: 0; color: #f27681; font-size: 13px }
+
+/* Communities, channel list, conversation, member list */
+#app { display: grid; grid-template-columns: 64px 240px minmax(0, 1fr) 220px; gap: 10px; height: 100vh; height: 100dvh; padding: 10px }
+#app > * { min-height: 0 }
+#rail { display: flex; flex-direction: column; align-items: center; gap: 9px; overflow: auto; padding-top: 4px }
+#rail button { width: 48px; height: 48px; padding: 0; border-radius: 50%; font-weight: 700 }
+#rail .on { color: #fff; background: var(--acc); border-radius: 16px }
+#side, #members { display: flex; flex-direction: column; padding: 10px }
+#sideTop { display: flex; justify-content: space-between; align-items: center; min-height: 42px; padding: 4px 6px 10px; font-weight: 700 }
+.community-identity, .side-actions { display: flex; align-items: center; min-width: 0; gap: 8px }
+.community-identity > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.context-menu { position: relative; flex: none }
+.context-menu summary { display: grid; place-items: center; width: 34px; height: 34px; color: var(--mut); border-radius: 50%; cursor: pointer; list-style: none; font-size: 22px; line-height: 1 }
+.context-menu summary::-webkit-details-marker { display: none }
+.context-menu summary:hover, .context-menu[open] summary { color: var(--tx); background: var(--panel-raised) }
+.context-menu-list { position: absolute; z-index: 12; top: calc(100% + 5px); right: 0; display: grid; min-width: 166px; padding: 5px; background: #25262c; border: 1px solid #44454f; border-radius: var(--shape-md); box-shadow: var(--shadow); transform-origin: top right; animation: pop-in .16s cubic-bezier(.2,.8,.2,1) both }
+.context-menu-list button { padding: 9px 11px; border: 0; border-radius: 10px; text-align: left; white-space: nowrap }
+.context-menu-list .delete-channel { color: #ffb4ab }
+.community-menu .context-menu-list { min-width: 158px }
+.community-icon { display: inline-grid; flex: none; place-items: center; width: 34px; height: 34px; object-fit: cover; border-radius: 11px }
+.community-icon-fallback { color: #fff; background: var(--acc); font-size: 11px }
+.community-icon-rail { width: 100%; height: 100%; object-fit: cover; border-radius: inherit }
+#mobileNavBackdrop { display: none }
+#mobileMenuBtn { display: none; flex: none; width: 36px; height: 36px; padding: 0; border: 0; background: transparent }
+#sideList { flex: 1; overflow: auto; display: grid; align-content: start; gap: 3px }
+.item { padding: 9px 10px; border-radius: 8px; color: var(--mut); cursor: pointer }
+.item:hover, .item.on { color: var(--tx); background: var(--panel-raised) }
+.dm-item { display: flex; align-items: center; gap: 10px; min-height: 50px; color: var(--tx) }
+.dm-item .av { width: 38px; height: 38px }
+.dm-item > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.empty-dms { color: var(--mut); cursor: default }
+.invite-code { font-size: 12px; cursor: default }
+.channel-row { display: flex; align-items: center; gap: 3px; min-width: 0 }
+.channel-row .item { flex: 1; min-width: 0 }
+#me { display: flex; align-items: center; gap: 6px; padding-top: 10px; border-top: 1px solid var(--line) }
+#me b { flex: 1; overflow: hidden; text-overflow: ellipsis }
+#me button { padding: 4px 7px }
+#members h4 { margin: 4px 6px 8px; color: var(--mut); font-size: 12px; text-transform: uppercase }
+#members .item { display: flex; align-items: center; gap: 8px }
+
+/* Messages and composer */
+main { display: flex; flex-direction: column; min-width: 0; overflow: hidden }
+#title { position: relative; display: flex; justify-content: space-between; align-items: center; min-height: 52px; padding: 8px 12px 8px 18px; font-weight: 700; border-bottom: 1px solid var(--line) }
+#titleText { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+#notificationBtn { position: relative; flex: none; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: transparent }
+#notificationBadge { position: absolute; top: -2px; right: -3px; min-width: 17px; height: 17px; padding: 1px 4px; color: #fff; background: #e34f64; border-radius: 10px; font-size: 10px; line-height: 15px }
+#notificationsPanel { position: absolute; z-index: 5; top: calc(100% + 4px); right: 8px; width: min(360px, calc(100vw - 24px)); max-height: min(65vh, 460px); overflow: hidden; color: var(--tx); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow) }
+.notifications-heading { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid var(--line) }
+.notifications-heading button { padding: 5px 8px; color: var(--acc); border: 0; background: transparent; font-size: 12px }
+#notificationList { display: grid; max-height: min(55vh, 390px); overflow-y: auto }
+.notification-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3px 8px; padding: 10px 12px; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; text-align: left }
+.notification-item b, .notification-item span { grid-column: 1 / -1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.notification-item b { font-size: 12px }
+.notification-item span, .notification-item time { color: var(--mut); font-size: 12px }
+.notification-item.unread { background: color-mix(in srgb, var(--acc) 10%, var(--panel)) }
+.notification-item time { grid-column: 2; grid-row: 1; white-space: nowrap }
+.empty-notifications { margin: 0; padding: 18px 12px; color: var(--mut); text-align: center; font-size: 13px }
+#typingStatus { min-height: 24px; padding: 3px 18px 5px; color: var(--acc); font-size: 12px }
+#msgs { flex: 1; overflow: auto; padding: 14px 18px }
+.msg { position: relative; display: flex; align-items: flex-start; gap: 10px; padding: 6px 34px 6px 0; touch-action: pan-y }
+.msg-content { min-width: 0; overflow-wrap: anywhere }
+.msg time { margin-left: 8px; color: var(--mut); font-size: 11px }
+.body { overflow-wrap: anywhere; white-space: pre-wrap; margin-top: 3px }
+.body img { max-width: min(360px, 100%); border-radius: 10px; margin-top: 4px }
+.reply-quote { display: grid; width: fit-content; max-width: 100%; gap: 2px; margin: 0 0 5px; padding: 5px 9px; border: 0; border-left: 3px solid var(--acc); border-radius: 3px; background: var(--panel-raised); text-align: left }
+.reply-quote b, .reply-quote span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.reply-quote b { color: var(--acc); font-size: 12px }
+.reply-quote span { max-width: min(360px, 70vw); color: var(--mut); font-size: 12px }
+.message-menu { position: absolute; top: 4px; right: 0; z-index: 2 }
+.message-menu summary { display: grid; place-items: center; width: 30px; height: 30px; color: var(--mut); border-radius: 50%; cursor: pointer; list-style: none; font-size: 22px; line-height: 1 }
+.message-menu summary::-webkit-details-marker { display: none }
+.message-menu summary:hover, .message-menu[open] summary { color: var(--tx); background: var(--panel-raised) }
+.message-menu-list { position: absolute; top: 30px; right: 0; display: grid; min-width: 112px; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--shape-md); box-shadow: var(--shadow); transform-origin: top right; animation: pop-in .16s cubic-bezier(.2,.8,.2,1) both }
+.message-menu-list button { padding: 8px 10px; border: 0; border-radius: 10px; text-align: left }
+.message-menu-list .delete-action { color: #f27681 }
+.msg:has(.message-menu[open]) { z-index: 3 }
+.msg:has(.message-menu[open]) .message-menu-list { z-index: 6 }
+.flair { margin-left: 6px; padding: 1px 7px; color: #fff; background: var(--acc); border-radius: 99px; font-size: 11px }
+.av { display: inline-grid; flex: none; place-items: center; width: 36px; height: 36px; color: #fff; background: var(--acc); border-radius: 50%; object-fit: cover; font-weight: 700 }
+#composer { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 8px; padding: 12px; border-top: 1px solid var(--line) }
+#composer #text { min-width: 0; border-radius: 22px; padding: 11px 16px }
+#replyPreview { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; padding: 7px 10px; border-left: 3px solid var(--acc); border-radius: 5px; background: var(--panel-raised) }
+#replyPreview > div { display: grid; min-width: 0; gap: 2px }
+#replyPreview b { color: var(--acc); font-size: 12px }
+#replyPreview span { overflow: hidden; color: var(--mut); font-size: 12px; text-overflow: ellipsis; white-space: nowrap }
+#replyPreview button { flex: none; padding: 2px 7px; border: 0; background: transparent; font-size: 20px }
+#attachBtn { flex: none; width: 40px; height: 40px; padding: 0; color: var(--acc); border-radius: 50%; font-size: 22px }
+#filePreview { grid-column: 2 / 4; max-width: 100%; overflow: hidden; color: var(--mut); font-size: 12px; text-overflow: ellipsis; white-space: nowrap }
+.attachment { display: block; margin-top: 6px; color: var(--acc); text-align: left; overflow-wrap: anywhere }
+
+dialog { width: min(380px, 92vw); padding: 20px; color: var(--tx); background: var(--panel); border: 1px solid var(--line); border-radius: 12px }
+dialog::backdrop { background: rgba(5, 12, 20, .55) }
+#setForm { display: grid; gap: 12px }
+#setForm h2 { margin: 0 }
+#setForm label { display: grid; gap: 4px; color: var(--mut); font-size: 13px }
+.row { display: flex; justify-content: space-between; gap: 8px }
+.row span { flex: 1 }
+
+#auth { background: var(--panel); border-radius: var(--shape-xl); box-shadow: var(--shadow) }
+#auth h1 { letter-spacing: -.03em }
+.tabs button, #auth form input { border-radius: var(--shape-md) }
+#rail, #side, #members, main { border-color: transparent }
+#rail { background: #191a1f; border-radius: var(--shape-lg) }
+#side, #members { background: var(--panel); border-radius: var(--shape-lg) }
+#sideTop { min-height: 50px; border-bottom: 1px solid var(--line); margin-bottom: 8px }
+.item { border-radius: var(--shape-sm) }
+.item:hover, .item.on { background: #34343d }
+#rail button { border-radius: var(--shape-md) }
+#rail .on { color: #292547; background: var(--acc); border-radius: var(--shape-md) }
+#rail .on:hover { background: var(--acc-hover) }
+.channel-row { border-radius: var(--shape-sm) }
+#title { border-radius: var(--shape-lg) var(--shape-lg) 0 0; background: var(--panel) }
+#msgs { background: var(--panel) }
+#composer { margin: 0 12px 12px; border: 1px solid var(--line); border-radius: var(--shape-xl); background: var(--panel-raised) }
+#composer #text { background: #1b1b20; border-color: transparent }
+#composer #text:focus { border-color: var(--acc) }
+.msg { border-radius: var(--shape-md) }
+.msg:hover { background: rgba(255, 255, 255, .025) }
+.flair { color: #292547 }
+.attachment { border-radius: var(--shape-sm) }
+dialog { border-radius: var(--shape-xl); box-shadow: var(--shadow) }
+dialog::backdrop { background: rgba(7, 8, 12, .68); backdrop-filter: blur(5px) }
+#setForm input, #setForm textarea { border-radius: var(--shape-md) }
+.app-dialog { width: min(440px, calc(100vw - 32px)); padding: 28px; color: var(--tx); background: #202127; border: 1px solid #44454f }
+.app-dialog form { display: grid; gap: 14px }
+.app-dialog .dialog-mark { display: grid; place-items: center; width: 42px; height: 42px; color: #292547; background: var(--acc); border-radius: 15px; font-size: 22px }
+.app-dialog h2 { margin: 0; font-size: 22px; letter-spacing: -.02em }
+.app-dialog p { margin: 0; color: var(--mut); line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere }
+.app-dialog input { border-radius: var(--shape-md) }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px }
+.danger-button { color: #3f090d; background: #ffb4ab; border-color: #ffb4ab }
+.danger-button:hover { color: #3f090d; background: #ffc9c2; border-color: #ffc9c2 }
+#toastRegion { position: fixed; z-index: 100; right: 20px; bottom: 20px; display: grid; gap: 10px; width: min(390px, calc(100vw - 32px)); pointer-events: none }
+.toast { padding: 14px 18px; color: var(--tx); background: #2b2c33; border: 1px solid #484952; border-radius: var(--shape-md); box-shadow: 0 8px 28px rgba(0, 0, 0, .35); opacity: 0; transform: translateY(8px) scale(.97); transition: opacity .2s ease, transform .2s cubic-bezier(.2,.8,.2,1) }
+.toast.visible { opacity: 1; transform: translateY(0) scale(1) }
+.toast-error { color: #ffdad6; background: #3a2022; border-color: #704143 }
+.toast-success { color: #c4eed0; background: #1d3226; border-color: #365e42 }
+
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(6px) scale(.94) }
+  to { opacity: 1; transform: translateY(0) scale(1) }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(9px) scale(.985) }
+  to { opacity: 1; transform: translateY(0) scale(1) }
+}
+#app > *, #auth { animation: rise-in .32s cubic-bezier(.2,.8,.2,1) both }
+#app > :nth-child(2) { animation-delay: .035s }
+#app > main { animation-delay: .07s }
+.msg { animation: rise-in .2s ease-out both }
+.dm-item, .channel-row, #rail button, .notification-item { animation: pop-in .2s ease-out both }
+dialog[open] { animation: pop-in .2s cubic-bezier(.2,.8,.2,1) both }
+.channel-row:has(.context-menu[open]) { position: relative; z-index: 8 }
+
+@media (max-width: 980px) {
+  #app { grid-template-columns: 56px 190px minmax(0, 1fr) }
+  #members { display: none }
+}
+@media (min-width: 981px) {
+  #app { grid-template-columns: 72px 260px minmax(0, 1fr) 240px; gap: 8px; padding: 8px }
+  #rail { padding: 8px 0; background: var(--page); border-radius: 12px }
+  #side, #members { background: var(--panel) }
+  #side { padding: 12px }
+}
+@media (max-width: 640px) {
+  body { overflow: hidden }
+  #app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    gap: 6px;
+    height: 100vh;
+    height: 100svh;
+    height: 100dvh;
+    padding: 6px;
+  }
+  #rail, #side { display: none }
+  #app > main { grid-column: 1; grid-row: 1; min-width: 0; min-height: 0 }
+  #members { display: none !important }
+  #mobileNavBackdrop:not([hidden]) { position: fixed; z-index: 19; inset: 0; display: block; background: rgba(0, 0, 0, .58) }
+  body.mobile-nav-open #rail {
+    position: fixed;
+    z-index: 21;
+    inset: 0 auto 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 62px;
+    padding: 12px 7px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: var(--page);
+    border-right: 1px solid var(--line);
+  }
+  body.mobile-nav-open #rail button { flex: 0 0 46px; width: 46px; height: 46px }
+  body.mobile-nav-open #side {
+    position: fixed;
+    z-index: 20;
+    inset: 0 auto 0 62px;
+    display: flex;
+    width: min(280px, calc(100vw - 62px));
+    padding: 12px;
+    border-radius: 0 14px 14px 0;
+  }
+  body.mobile-nav-open #sideTop { min-height: 48px }
+  body.mobile-nav-open #sideList { display: grid; align-content: start; overflow-x: hidden; overflow-y: auto }
+  body.mobile-nav-open .invite-code { flex: initial }
+  body.mobile-nav-open .channel-row { flex: initial; max-width: none }
+  body.mobile-nav-open .channel-row .item { white-space: normal }
+  body.mobile-nav-open #me { flex: initial; padding-top: 10px }
+  #title { gap: 8px }
+  #mobileMenuBtn { display: block }
+  #title { min-height: 44px; padding: 12px }
+  #notificationsPanel { right: 2px }
+  #typingStatus { padding: 3px 12px 5px }
+  #msgs { min-height: 0; padding: 10px 12px }
+  #composer { grid-template-columns: 36px minmax(0, 1fr) auto; gap: 5px; padding: 7px }
+  #composer { margin: 0 6px 6px; border-radius: 22px }
+  #attachBtn { width: 36px; height: 36px }
+  #composer #text { padding: 10px 12px }
+  #composer .primary { padding: 9px 10px }
+  .msg { padding-right: 32px }
+  .message-menu summary { width: 32px; height: 32px }
+}
+@media (max-width: 360px) {
+  #app { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: 4px; padding: 4px }
+  #composer { grid-template-columns: 32px minmax(0, 1fr) auto; gap: 4px; padding: 5px }
+  #attachBtn { width: 32px; height: 32px }
+  #composer .primary { padding: 8px }
+  #composer #text { padding: 9px 10px }
+}
