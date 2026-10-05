@@ -134,7 +134,7 @@ Released under the [MIT License](LICENSE).
 
 ## Author
 
-**Your Name**
+**Arpit Vishwakarma**
 [GitHub](https://github.com/V4RPIT) ·
 
 <div align="center">
