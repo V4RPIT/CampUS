@@ -1,75 +1,65 @@
 <div align="center">
 
-# 🎓 ClassRoom
+# 🎓 CampUS
 
-### Anonymous, Discord-style chat room for college classes
+### The anonymous chat space for your class
 
-Sign up with just a **username and password**. Chat in real time, share notes, and get announcements from admins.
+Join with just a **username and password**. Talk in real time, share notes, and stay on top of announcements.
 
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-339933?logo=node.js&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-4.x-000000?logo=express&logoColor=white)
 ![Socket.IO](https://img.shields.io/badge/Socket.IO-4.x-010101?logo=socket.io&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue)
-![Status](https://img.shields.io/badge/Status-College%20Project-6366f1)
 
 </div>
 
 ---
 
-## 📖 About
+## About
 
-**ClassRoom** is a clean, light-themed chat platform built as a college project. It gives a class a private, anonymous place to talk, with no email, phone number or real name required. Everyone uses a unique username, and admins (such as a teacher or class representative) can post official announcements and manage subgroups.
+**CampUS** is a private, anonymous chat platform for a college class. There is no email, phone number or real name involved: students join with a unique username and password, pick an avatar and flair, and start talking.
 
-The app is intentionally simple: no database server, no build step, and no front-end framework. Anyone can clone it, run two commands and start extending it.
+Admins (a teacher or class representative) post official announcements and organise the class into subgroups for subjects, clubs or projects.
 
-## ✨ Features
+CampUS needs no database server and no build step. Install, run, and it works.
 
-| Area | What you get |
+## Features
+
+- **Anonymous accounts:** sign up with only a username and password. Usernames are unique (case-insensitive), passwords are hashed with bcrypt, and sessions use JWT.
+- **Class group:** every student lands in the main class space, with an `announcements` channel, a `general` chat and a `notes` channel.
+- **Announcements:** only admins can post. Announcements are visually highlighted so they never get lost.
+- **Subgroups:** admins create or remove subgroups for subjects, clubs or projects. Each one can be a **Chat**, **Notes only** or **Announcements** channel.
+- **Notes sharing:** notes channels require a title plus content or a link (Drive, GitHub, etc.), so shared material stays organised and easy to find.
+- **Real-time messaging:** messages appear instantly for everyone, with no refreshing.
+- **Avatars:** choose an emoji and a background colour to represent you.
+- **Flairs:** show who you are with a profile flair: Student, CR, Topper, Coder, Artist, Gamer or Night Owl. Admins get a special **Admin** flair.
+- **Moderation:** admins can delete any message or subgroup, and users can delete their own messages.
+- **Clean, light interface:** a minimal responsive layout that works on desktop and mobile.
+
+## Tech Stack
+
+| Layer | Technology |
 |---|---|
-| 🔐 **Authentication** | Username and password only. Unique usernames (case-insensitive), bcrypt-hashed passwords, JWT sessions |
-| 🏫 **Main class group** | `announcements` (admin-only posting), `general` (open chat), `notes` (notes only) |
-| 🧩 **Subgroups** | Admins create or delete subgroups. Each can be **Chat**, **Notes only** or **Announcements** |
-| 📝 **Notes sharing** | Notes channels require a title plus content or a link (Drive, GitHub, etc.), keeping them organised |
-| 📢 **Announcements** | Only admins can post, and they are highlighted visually |
-| 💬 **Real-time chat** | Instant message delivery with Socket.IO |
-| 🎭 **Avatars** | Pick an emoji and a background colour |
-| 🏷️ **Flairs** | Reddit-style flair pills: Student, CR, Topper, Coder, Artist, Gamer, Night Owl (plus a red **Admin** flair) |
-| 🛡️ **Moderation** | Admins can delete any message or subgroup. Users can delete their own messages |
-| 🎨 **Clean UI** | Light theme, responsive layout, colours editable from one CSS block |
+| Server | Node.js, Express |
+| Real-time | Socket.IO |
+| Auth | bcryptjs, jsonwebtoken (JWT) |
+| Storage | JSON file (`data.json`), created automatically |
+| Frontend | HTML, CSS, vanilla JavaScript |
 
-## 🛠️ Tech Stack
+## Getting Started
 
-- **Backend:** Node.js, Express, Socket.IO
-- **Auth:** bcryptjs (password hashing) and jsonwebtoken (JWT)
-- **Storage:** JSON file (`data.json`), auto-created on first run
-- **Frontend:** HTML, CSS and vanilla JavaScript
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [Node.js](https://nodejs.org/) **v18 or newer**
-- [Git](https://git-scm.com/) (only needed to clone)
-
-### Installation
+**Requirements:** [Node.js](https://nodejs.org/) v18 or newer.
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/<your-username>/student-chatroom.git
-cd student-chatroom
-
-# 2. Install dependencies
+git clone https://github.com/V4RPIT/campus.git
+cd campus
 npm install
-
-# 3. Start the server
 npm start
 ```
 
-Open **http://localhost:3000** in your browser.
+Open **http://localhost:3000**.
 
-> **Tip:** use `npm run dev` for auto-restart while editing the backend.
-
-### Try it on other devices
-Find your computer's local IP address and open `http://<your-ip>:3000` on any phone or laptop connected to the same Wi-Fi.
+To use it with classmates on the same Wi-Fi, open `http://<your-computer-ip>:3000` on their devices.
 
 ### Default admin account
 
@@ -77,138 +67,78 @@ Find your computer's local IP address and open `http://<your-ip>:3000` on any ph
 |---|---|
 | `admin` | `admin123` |
 
-> ⚠️ **Change this before real use.** Edit the default admin in `server.js`, then delete `data.json` so it is recreated.
+Change these in `server.js` and delete `data.json` before using CampUS with a real class.
 
-## ⚙️ Configuration
-
-Set these environment variables, or edit the defaults in `server.js`:
+### Configuration
 
 | Variable | Default | Description |
 |---|---|---|
-| `PORT` | `3000` | Port the server listens on |
-| `JWT_SECRET` | `change-this-secret` | Secret used to sign login tokens. **Set a long random value in production** |
+| `PORT` | `3000` | Port the server runs on |
+| `JWT_SECRET` | `change-this-secret` | Secret used to sign login tokens |
 
-Example:
 ```bash
-JWT_SECRET=my-long-random-secret PORT=4000 npm start
+JWT_SECRET=your-long-random-secret PORT=4000 npm start
 ```
 
-## 👥 Roles and Permissions
+## Roles
 
 | Action | Student | Admin |
 |---|:---:|:---:|
-| Register / log in | ✅ | ✅ |
-| Read all channels | ✅ | ✅ |
-| Chat in chat channels | ✅ | ✅ |
-| Share notes in notes channels | ✅ | ✅ |
-| Post in announcement channels | ❌ | ✅ |
-| Create / delete subgroups | ❌ | ✅ |
+| Chat and share notes | ✅ | ✅ |
+| Customise avatar and flair | ✅ | ✅ |
 | Delete own messages | ✅ | ✅ |
-| Delete anyone's messages | ❌ | ✅ |
-| Change own avatar and flair | ✅ | ✅ |
+| Post announcements | ❌ | ✅ |
+| Create or delete subgroups | ❌ | ✅ |
+| Delete any message | ❌ | ✅ |
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-student-chatroom/
-├── server.js          # Backend: REST API, auth, permissions, Socket.IO, JSON storage
-├── package.json       # Dependencies and scripts
+campus/
+├── server.js          # API, authentication, permissions, real-time events, storage
+├── package.json
 ├── public/
-│   ├── index.html     # Page layout (login screen + chat app + modal)
-│   ├── style.css      # Light theme (colours defined in :root)
-│   └── app.js         # Front-end logic (auth, channels, messages, profile)
-├── data.json          # Auto-created database (git-ignored)
-├── .gitignore
-├── LICENSE
-└── README.md
+│   ├── index.html     # Layout
+│   ├── style.css      # Theme (colours defined in :root)
+│   └── app.js         # Client logic
+├── data.json          # Created automatically (git-ignored)
+└── LICENSE
 ```
 
-## 🔌 API Overview
+## API
 
-All routes except register and login need the header `Authorization: Bearer <token>`.
+All routes except register and login need an `Authorization: Bearer <token>` header.
 
 | Method | Endpoint | Access | Purpose |
 |---|---|---|---|
 | POST | `/api/register` | Public | Create an account |
-| POST | `/api/login` | Public | Log in and receive a token |
-| GET | `/api/me` | User | Get own profile |
-| PUT | `/api/me` | User | Update avatar and flair |
+| POST | `/api/login` | Public | Log in |
+| GET / PUT | `/api/me` | User | View or update your profile |
 | GET | `/api/channels` | User | List channels |
 | POST | `/api/channels` | Admin | Create a subgroup |
 | DELETE | `/api/channels/:id` | Admin | Delete a subgroup |
-| GET | `/api/messages/:channelId` | User | Last 100 messages of a channel |
-| DELETE | `/api/messages/:id` | Owner or Admin | Delete a message |
+| GET | `/api/messages/:channelId` | User | Latest 100 messages |
+| DELETE | `/api/messages/:id` | Owner / Admin | Delete a message |
 
-**Socket.IO events**
+**Real-time events:** `send` (client to server), `message`, `deleted` and `channels` (server to clients).
 
-| Event | Direction | Description |
-|---|---|---|
-| `send` | client to server | Send a message `{ channelId, title?, text }` |
-| `message` | server to clients | New message broadcast |
-| `deleted` | server to clients | A message was removed |
-| `channels` | server to clients | Channel list changed |
+## Customising
 
-## 🎬 Demo Walkthrough
+- **Flairs:** edit the `FLAIRS` list in both `server.js` and `public/app.js`, then add a colour in `style.css`.
+- **Theme:** change the colour variables in `:root` at the top of `public/style.css`.
+- **Default channels:** edit `db.channels` in `server.js`, then delete `data.json` to apply.
 
-1. Open two browser windows (one normal, one incognito) and register two different users.
-2. Chat in `#general` and show messages arriving instantly.
-3. Open the profile card (bottom-left) and change the avatar, colour and flair.
-4. In `notes`, share a note with a title and a link.
-5. Show a student cannot post in `announcements`.
-6. Log in as `admin`, post an announcement, create a new subgroup and delete a message.
-
-## 🖼️ Screenshots
-
-> Add your screenshots to a `screenshots/` folder and link them here:
->
-> `![Login](screenshots/login.png)`
-> `![Chat](screenshots/chat.png)`
-
-## 🔒 Security Notes
-
-- Passwords are hashed with bcrypt and never stored in plain text.
-- All messages are escaped before rendering, which protects against XSS.
-- Change the default admin password and set a strong `JWT_SECRET` before deploying.
-- This is a college project. For production, add rate limiting, HTTPS and a real database.
-
-## 🗺️ Roadmap
-
-- [ ] File upload for notes (PDF, images) using `multer`
-- [ ] Dark mode toggle
-- [ ] Typing indicators and online users list
-- [ ] Message reactions and replies
-- [ ] Pinned messages
-- [ ] Switch storage to SQLite or MongoDB
-- [ ] Deploy on Render or Railway
-
-### Customising
-
-- **Add a flair:** add it to the `FLAIRS` list in **both** `server.js` and `public/app.js`, then give it a colour in `public/style.css` (`.flair.YourFlair`).
-- **Change the theme:** edit the colour variables in `:root` at the top of `public/style.css`.
-- **Add default channels:** edit the `db.channels` list in `server.js` (delete `data.json` to apply).
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m "Add my feature"`
-4. Push the branch: `git push origin feature/my-feature`
-5. Open a Pull Request
-
-## 📄 License
+## License
 
 Released under the [MIT License](LICENSE).
 
-## 👤 Author
+## Author
 
 **Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
-- College: Your College Name, Department, Year
-
----
+[GitHub](https://github.com/V4RPIT) ·
 
 <div align="center">
 
-⭐ If you found this project useful, please give it a star!
+If CampUS helped you, consider giving it a ⭐
 
 </div>
